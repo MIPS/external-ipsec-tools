@@ -28,8 +28,6 @@
 
 #ifdef ANDROID_CHANGES
 
-#include <openssl/engine.h>
-
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -159,22 +157,10 @@ int main(int argc, char **argv)
 {
 #ifdef ANDROID_CHANGES
     int control = android_get_control_and_arguments(&argc, &argv);
-#if !defined(OPENSSL_IS_BORINGSSL)
-    ENGINE *engine;
-#endif
 
     if (control != -1) {
         pname = "%p";
         monitor_fd(control, NULL);
-
-#if !defined(OPENSSL_IS_BORINGSSL)
-        ENGINE_load_dynamic();
-        engine = ENGINE_by_id("keystore");
-        if (!engine || !ENGINE_init(engine)) {
-            do_plog(LLV_ERROR, "ipsec-tools: cannot load keystore engine");
-            exit(1);
-        }
-#endif
     }
 #endif
 
@@ -213,12 +199,6 @@ int main(int argc, char **argv)
         }
     }
 
-#if !defined(OPENSSL_IS_BORINGSSL)
-    if (engine) {
-        ENGINE_finish(engine);
-        ENGINE_free(engine);
-    }
-#endif
     return 0;
 }
 
