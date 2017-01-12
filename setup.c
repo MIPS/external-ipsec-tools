@@ -380,7 +380,8 @@ static void set_xauth_and_more(struct remoteconf *remoteconf,
     xauth->login = strtovchar(username);
     xauth->login->l += 1;
     xauth->pass = strtovchar(password);
-    xauth->pass->l += 1;
+    // Unlike the code that reads login, the code that reads pass does not
+    // strip trailing nulls, so don't add one here.
     remoteconf->xauth = xauth;
     remoteconf->mode_cfg = TRUE;
     remoteconf->script[SCRIPT_PHASE1_UP] = strtovchar(phase1_up);
