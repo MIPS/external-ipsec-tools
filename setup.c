@@ -53,6 +53,7 @@
 #include "privsep.h"
 #include "throttle.h"
 #include "misc.h"
+#include "handler.h"
 
 static struct localconf localconf;
 static struct sainfo sainfo;
@@ -670,4 +671,12 @@ const char *sainfo2str(const struct sainfo *si)
 int throttle_host(struct sockaddr *addr, int fail)
 {
     return 0;
+}
+
+void shutdown_session()
+{
+    flushph2();
+    flushph1();
+    isakmp_close();
+    pfkey_close(localconf.sock_pfkey);
 }
