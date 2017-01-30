@@ -177,10 +177,6 @@ int main(int argc, char **argv)
 
 #ifdef ANDROID_CHANGES
     shutdown(control, SHUT_WR);
-    if (setuid(AID_VPN) != 0) {
-        do_plog(LLV_ERROR, "setuid(AID_VPN) failed\n");
-        exit(1);
-    }
 #endif
 
     while (1) {
