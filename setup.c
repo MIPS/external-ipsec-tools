@@ -505,11 +505,14 @@ void setup(int argc, char **argv)
 
     /* Add proposals. */
     add_proposal(remoteconf, auth,
-            OAKLEY_ATTR_HASH_ALG_SHA2_512, OAKLEY_ATTR_ENC_ALG_AES, 256);
-    add_proposal(remoteconf, auth,
             OAKLEY_ATTR_HASH_ALG_SHA2_384, OAKLEY_ATTR_ENC_ALG_AES, 256);
     add_proposal(remoteconf, auth,
             OAKLEY_ATTR_HASH_ALG_SHA2_256, OAKLEY_ATTR_ENC_ALG_AES, 256);
+    // VPNs to openswan breaks when SHA2_512 is used as the first proposal.
+    // openswan supports SHA2_256 or lower hash alg. With this add_proposal
+    // order, openswan picks SHA2_256 and others pick SHA2_384
+    add_proposal(remoteconf, auth,
+            OAKLEY_ATTR_HASH_ALG_SHA2_512, OAKLEY_ATTR_ENC_ALG_AES, 256);
     add_proposal(remoteconf, auth,
             OAKLEY_ATTR_HASH_ALG_SHA, OAKLEY_ATTR_ENC_ALG_AES, 256);
     add_proposal(remoteconf, auth,
