@@ -55,11 +55,12 @@ LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/src/include-glibc \
 	$(LOCAL_PATH)/src/libipsec \
 	$(LOCAL_PATH)/src/racoon \
-	$(LOCAL_PATH)/src/racoon/missing
+	$(LOCAL_PATH)/src/racoon/missing \
+	system/netd/include
 
 LOCAL_STATIC_LIBRARIES := libipsec
 
-LOCAL_SHARED_LIBRARIES := libcutils liblog libcrypto libkeystore-engine
+LOCAL_SHARED_LIBRARIES := libcutils liblog libcrypto libkeystore-engine libnetd_client
 
 LOCAL_CFLAGS := -DANDROID_CHANGES -DHAVE_CONFIG_H -D_BSD_SOURCE=1
 
