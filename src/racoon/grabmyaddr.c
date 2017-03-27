@@ -416,7 +416,9 @@ grab_myaddrs()
 			addr1, ifap->ifa_name);
 		q = find_myaddr(old, p);
 #ifdef ANDROID_CHANGES
-		protectFromVpn(q->sock);
+		if (q) {
+			protectFromVpn(q->sock);
+		}
 #endif
 		if (q)
 			p->sock = q->sock;
@@ -539,7 +541,9 @@ grab_myaddrs()
 				addr1, ifr->ifr_name);
 			q = find_myaddr(old, p);
 #ifdef ANDROID_CHANGES
-			protectFromVpn(q->sock);
+			if (q) {
+				protectFromVpn(q->sock);
+			}
 #endif
 			if (q)
 				p->sock = q->sock;
